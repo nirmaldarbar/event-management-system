@@ -1,0 +1,189 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 228 33% 98%;
+    --foreground: 224 40% 11%;
+    --card: 0 0% 100%;
+    --card-foreground: 224 40% 11%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 224 40% 11%;
+    --primary: 243 75% 56%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 225 30% 95%;
+    --secondary-foreground: 224 35% 20%;
+    --muted: 225 28% 95%;
+    --muted-foreground: 222 12% 42%;
+    --accent: 243 80% 96%;
+    --accent-foreground: 243 60% 38%;
+    --coral: 346 77% 55%;
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 100%;
+    --success: 158 70% 29%;
+    --success-foreground: 0 0% 100%;
+    --warning: 38 92% 50%;
+    --warning-foreground: 32 90% 24%;
+    --border: 225 20% 90%;
+    --input: 225 18% 85%;
+    --ring: 243 75% 56%;
+    --shadow: 224 50% 20%;
+    --radius: 1rem;
+  }
+
+  .dark {
+    --background: 226 32% 7%;
+    --foreground: 220 20% 95%;
+    --card: 226 28% 10%;
+    --card-foreground: 220 20% 95%;
+    --popover: 226 28% 11%;
+    --popover-foreground: 220 20% 95%;
+    --primary: 243 82% 66%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 225 22% 15%;
+    --secondary-foreground: 220 25% 90%;
+    --muted: 225 22% 14%;
+    --muted-foreground: 220 12% 64%;
+    --accent: 243 40% 18%;
+    --accent-foreground: 243 90% 86%;
+    --coral: 346 85% 68%;
+    --destructive: 0 75% 62%;
+    --destructive-foreground: 0 0% 100%;
+    --success: 158 62% 50%;
+    --success-foreground: 158 70% 8%;
+    --warning: 38 92% 56%;
+    --warning-foreground: 38 95% 82%;
+    --border: 225 18% 19%;
+    --input: 225 16% 24%;
+    --ring: 243 82% 66%;
+    --shadow: 226 60% 2%;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-background font-sans text-foreground antialiased;
+    font-feature-settings: "cv11", "ss01";
+  }
+
+  h1, h2, h3, h4 {
+    @apply font-display tracking-tight;
+  }
+
+  ::selection {
+    background: hsl(var(--primary) / 0.25);
+  }
+
+  :focus-visible {
+    outline: none;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, ::before, ::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+@layer components {
+  .glass {
+    @apply border border-border bg-background/75 backdrop-blur-xl;
+  }
+
+  /* Headline accent: works in both themes */
+  .text-gradient {
+    background-image: linear-gradient(90deg, #4f46e5, #7c3aed 55%, #c026d3);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .dark .text-gradient {
+    background-image: linear-gradient(90deg, #a5b4fc, #c4b5fd 55%, #f0abfc);
+  }
+
+  /* Small label pill */
+  .sticker {
+    @apply inline-flex items-center gap-1.5 rounded-full border border-border bg-card/70 px-3 py-1 text-sm font-medium text-foreground backdrop-blur;
+  }
+
+  /* Interactive background layers (see components/common/InteractiveBackground.jsx) */
+  .bg-grid {
+    background-image:
+      linear-gradient(to right, hsl(var(--foreground) / 0.05) 1px, transparent 1px),
+      linear-gradient(to bottom, hsl(var(--foreground) / 0.05) 1px, transparent 1px);
+    background-size: 44px 44px;
+  }
+  .bg-grid-lit {
+    background-image:
+      linear-gradient(to right, hsl(var(--primary) / 0.55) 1px, transparent 1px),
+      linear-gradient(to bottom, hsl(var(--primary) / 0.55) 1px, transparent 1px);
+    background-size: 44px 44px;
+    -webkit-mask-image: radial-gradient(260px circle at var(--mx, 50%) var(--my, 30%), #000, transparent 70%);
+    mask-image: radial-gradient(260px circle at var(--mx, 50%) var(--my, 30%), #000, transparent 70%);
+  }
+}
+
+/* react-datepicker restyle to match theme */
+.react-datepicker-wrapper { width: 100%; }
+.react-datepicker {
+  font-family: inherit !important;
+  background: hsl(var(--popover)) !important;
+  color: hsl(var(--popover-foreground)) !important;
+  border: 1px solid hsl(var(--border)) !important;
+  border-radius: 1rem !important;
+  box-shadow: 0 18px 40px -14px hsl(var(--shadow) / 0.3);
+  overflow: hidden;
+}
+.react-datepicker__header {
+  background: hsl(var(--muted)) !important;
+  border-bottom: 1px solid hsl(var(--border)) !important;
+}
+.react-datepicker__current-month,
+.react-datepicker-time__header,
+.react-datepicker__day-name,
+.react-datepicker__day,
+.react-datepicker__time-list-item { color: hsl(var(--foreground)) !important; }
+.react-datepicker__day:hover,
+.react-datepicker__time-list-item:hover { background: hsl(var(--secondary)) !important; border-radius: 0.6rem; }
+.react-datepicker__day--selected,
+.react-datepicker__day--keyboard-selected,
+.react-datepicker__time-list-item--selected {
+  background: hsl(var(--primary)) !important;
+  color: hsl(var(--primary-foreground)) !important;
+  font-weight: 600;
+  border-radius: 0.6rem;
+}
+.react-datepicker__day--disabled { opacity: 0.35; }
+.react-datepicker__time-container { border-left: 1px solid hsl(var(--border)) !important; }
+.react-datepicker__time-container .react-datepicker__time { background: hsl(var(--popover)) !important; }
+.react-datepicker-popper { z-index: 40 !important; }
+.react-datepicker__triangle { display: none; }
+
+/* react-toastify restyle */
+.Toastify__toast {
+  border-radius: 0.875rem !important;
+  font-family: inherit !important;
+  background: hsl(var(--popover)) !important;
+  color: hsl(var(--popover-foreground)) !important;
+  border: 1px solid hsl(var(--border));
+  box-shadow: 0 18px 40px -14px hsl(var(--shadow) / 0.3) !important;
+}
+.Toastify__close-button { color: hsl(var(--muted-foreground)) !important; }
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: hsl(var(--border)); border-radius: 999px; border: 2px solid hsl(var(--background)); }
+::-webkit-scrollbar-thumb:hover { background: hsl(var(--muted-foreground) / 0.5); }
+
+@media print { .no-print { display: none !important; } }
